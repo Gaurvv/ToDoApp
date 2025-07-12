@@ -33,13 +33,14 @@ const Routine = ({ supabase, session }) => {
       name: newRoutine.name,
       time: newRoutine.time,
       completed: false,
+      // inserted_at is handled by Supabase default value now
     }]);
 
     if (error) {
       console.error('Error adding routine:', error);
     } else {
       setNewRoutine({ name: '', time: '' });
-      setShowForm(false);
+      setShowForm(false); // <--- THIS IS THE KEY FIX: Hide the form after successful add
       fetchRoutines();
     }
   };

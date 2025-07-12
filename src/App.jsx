@@ -42,7 +42,6 @@ const App = () => {
     { id: 'notes', label: 'Notes', icon: FileText }
   ];
 
-  // FIX: Pass supabase and session to all components
   const renderContent = () => {
     switch (activeTab) {
       case 'routines':
