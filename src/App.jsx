@@ -58,23 +58,23 @@ const App = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 font-inter">
       {/* Top Navbar */}
-      <nav className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-blue-600">Productivity Hub</h1>
+      <nav className="bg-white shadow-md py-4 px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center">
+        <h1 className="text-xl font-bold text-blue-600 mb-2 sm:mb-0">Productivity Hub</h1>
         {!session ? (
           <button
             onClick={() => setShowAuth(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full sm:w-auto"
           >
             Sign In
           </button>
         ) : (
-          <div className="flex items-center gap-4">
-            <span className="text-gray-700 text-sm">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 w-full sm:w-auto">
+            <span className="text-gray-700 text-sm text-center sm:text-left">
               Welcome, {session.user.user_metadata?.username || session.user.email}
             </span>
             <button
               onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 flex items-center gap-2"
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               <LogOut size={18} />
               Logout
@@ -90,14 +90,14 @@ const App = () => {
         <div className="container mx-auto px-4 py-8">
           {/* Tabs */}
           <nav className="flex justify-center mb-8">
-            <div className="flex bg-white rounded-lg shadow-md p-1">
+            <div className="flex flex-wrap justify-center bg-white rounded-lg shadow-md p-1">
               {tabs.map(tab => {
                 const Icon = tab.icon;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-md transition-colors ${
+                    className={`flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-md transition-colors m-1 sm:m-0 ${
                       activeTab === tab.id
                         ? 'bg-blue-600 text-white shadow-md'
                         : 'text-gray-600 hover:text-blue-600'
@@ -115,7 +115,7 @@ const App = () => {
         </div>
       ) : (
         !showAuth && (
-          <div className="text-center py-32 text-gray-500 text-lg">
+          <div className="text-center py-16 sm:py-32 text-gray-500 text-base sm:text-lg px-4">
             Please click "Sign In" from the top to get started!
           </div>
         )

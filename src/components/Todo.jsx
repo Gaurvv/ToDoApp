@@ -27,7 +27,7 @@ const Todo = ({ supabase, session }) => {
         user_id: session.user.id,
         text: newTodo.trim(),
         completed: false,
-        priority: 'medium',
+        priority: 'medium', // Default priority, could be expanded to allow user selection
       }]);
       if (error) console.error('Error adding todo:', error);
       else {
@@ -68,18 +68,18 @@ const Todo = ({ supabase, session }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-          <CheckSquare className="text-green-600" size={28} />
+    <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6"> {/* Adjusted padding */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6"> {/* Changed to flex-col on small, flex-row on sm+ */}
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 flex items-center gap-2 mb-4 sm:mb-0"> {/* Adjusted font size and margin */}
+          <CheckSquare className="text-green-600" size={24} sm:size={28} /> {/* Adjusted icon size */}
           Todo List
         </h2>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap justify-center sm:justify-end gap-2 w-full sm:w-auto"> {/* Added flex-wrap for buttons */}
           {['all', 'active', 'completed'].map(f => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-3 py-1 rounded text-sm ${
+              className={`px-3 py-1.5 rounded text-sm sm:text-base ${ /* Adjusted padding and font size */
                 filter === f ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'
               }`}
             >
@@ -90,54 +90,61 @@ const Todo = ({ supabase, session }) => {
       </div>
 
       <div className="mb-6">
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2"> {/* Changed to flex-col on small, flex-row on sm+ */}
           <input
             type="text"
             placeholder="Add a new task..."
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && addTodo()}
-            className="flex-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 p-2.5 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base" // Adjusted padding and font size
           />
           <button
             onClick={addTodo}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 flex items-center gap-2"
+            className="bg-blue-600 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 w-full sm:w-auto text-base sm:text-lg" // Adjusted padding, width, font size
           >
-            <Plus size={20} />
+            <Plus size={18} sm:size={20} /> {/* Adjusted icon size */}
             Add
           </button>
         </div>
       </div>
 
       <div className="space-y-2">
-        {filteredTodos.map(todo => (
-          <div
-            key={todo.id}
-            className={`flex items-center justify-between p-4 rounded-lg border-l-4 ${
-              getPriorityColor(todo.priority)
-            } ${todo.completed ? 'bg-gray-50' : 'bg-white'} shadow-sm`}
-          >
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => toggleTodo(todo.id, todo.completed)}
-                className={`w-6 h-6 rounded border-2 flex items-center justify-center ${
-                  todo.completed ? 'bg-green-600 border-green-600' : 'border-gray-300'
-                }`}
-              >
-                {todo.completed && <Check size={16} className="text-white" />}
-              </button>
-              <span className={`${todo.completed ? 'line-through text-gray-500' : 'text-gray-800'}`}>
-                {todo.text}
-              </span>
-            </div>
-            <button
-              onClick={() => deleteTodo(todo.id)}
-              className="text-red-500 hover:text-red-700"
+        {filteredTodos.length === 0 ? (
+          <p className="text-center text-gray-500 py-8 text-base sm:text-lg">
+            No {filter === 'all' ? '' : filter} todos found.
+            {filter === 'all' && ' Add a new task to get started!'}
+          </p>
+        ) : (
+          filteredTodos.map(todo => (
+            <div
+              key={todo.id}
+              className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 rounded-lg border-l-4 ${ /* Adjusted padding, flex-col on small */
+                getPriorityColor(todo.priority)
+              } ${todo.completed ? 'bg-gray-50' : 'bg-white'} shadow-sm`}
             >
-              <X size={20} />
-            </button>
-          </div>
-        ))}
+              <div className="flex items-center gap-3 mb-2 sm:mb-0"> {/* Added margin bottom for small screens */}
+                <button
+                  onClick={() => toggleTodo(todo.id, todo.completed)}
+                  className={`w-5 h-5 sm:w-6 sm:h-6 rounded border-2 flex items-center justify-center flex-shrink-0 ${ /* Adjusted size */
+                    todo.completed ? 'bg-green-600 border-green-600' : 'border-gray-300'
+                  }`}
+                >
+                  {todo.completed && <Check size={14} sm:size={16} className="text-white" />} {/* Adjusted icon size */}
+                </button>
+                <span className={`text-base sm:text-lg ${todo.completed ? 'line-through text-gray-500' : 'text-gray-800'}`}> {/* Adjusted font size */}
+                  {todo.text}
+                </span>
+              </div>
+              <button
+                onClick={() => deleteTodo(todo.id)}
+                className="text-red-500 hover:text-red-700 mt-2 sm:mt-0 self-end sm:self-auto" // Added margin top and self-align for small screens
+              >
+                <X size={18} sm:size={20} /> {/* Adjusted icon size */}
+              </button>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

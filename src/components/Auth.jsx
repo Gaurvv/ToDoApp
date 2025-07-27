@@ -55,13 +55,13 @@ const Auth = ({ supabase }) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4 sm:p-6"> {/* Added responsive padding */}
+      <div className="bg-white p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-md"> {/* Adjusted padding */}
+        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6"> {/* Adjusted font size */}
           {isLogin ? 'Login' : 'Sign Up'}
         </h2>
 
-        <form onSubmit={isLogin ? handleSignIn : handleSignUp} className="space-y-5">
+        <form onSubmit={isLogin ? handleSignIn : handleSignUp} className="space-y-4 sm:space-y-5"> {/* Adjusted spacing */}
           <div>
             <label htmlFor="email" className="sr-only">Email</label>
             <div className="relative">
@@ -72,7 +72,7 @@ const Auth = ({ supabase }) => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                className="w-full pl-10 pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-sm sm:text-base" // Adjusted padding and font size
                 required
               />
             </div>
@@ -87,7 +87,7 @@ const Auth = ({ supabase }) => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                className="w-full pl-10 pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-sm sm:text-base" // Adjusted padding and font size
                 required
               />
             </div>
@@ -96,7 +96,7 @@ const Auth = ({ supabase }) => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-blue-600 text-white py-2.5 sm:py-3 rounded-lg font-semibold text-base sm:text-lg hover:bg-blue-700 transition duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" // Adjusted padding and font size
           >
             {loading ? (
               <span className="animate-spin h-5 w-5 border-4 border-white border-t-transparent rounded-full"></span>
@@ -114,13 +114,13 @@ const Auth = ({ supabase }) => {
 
         {/* Message */}
         {message && (
-          <p className={`mt-4 text-center text-sm ${message.includes('❌') ? 'text-red-600' : 'text-green-600'}`}>
+          <p className={`mt-4 text-center text-xs sm:text-sm ${message.includes('❌') ? 'text-red-600' : 'text-green-600'}`}> {/* Adjusted font size */}
             {message}
           </p>
         )}
 
         {/* Toggle Button */}
-        <p className="mt-6 text-center text-gray-600">
+        <p className="mt-5 sm:mt-6 text-center text-gray-600 text-sm sm:text-base"> {/* Adjusted margin and font size */}
           {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
           <button
             onClick={() => setIsLogin(!isLogin)}
